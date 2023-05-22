@@ -19,6 +19,12 @@ void transform(sf::Image& im, FibLFSR* f);
 void transform(std::string& str, FibLFSR* f);
 
 int main(int argc, char* argv[]) {
+	if (argc != 3)
+	{
+		std::cerr << "You have provided " << argc - 1 << " arguments, you must provide 2!\n";
+		return EXIT_FAILURE;
+	}
+
 	if (std::string(argv[1]).find(".png") != std::string::npos
 		&& std::string(argv[2]).find(".png") != std::string::npos)
 		return photoMagic(argv);
@@ -26,6 +32,9 @@ int main(int argc, char* argv[]) {
 	else if (std::string(argv[1]).find(".txt") != std::string::npos
 		&& std::string(argv[2]).find(".txt") != std::string::npos)
 		return passwordMagic(argv);
+
+	else
+		std::cerr << "No files with those names could be found\n";
 
 	return 0;
 }
@@ -45,7 +54,7 @@ int photoMagic(char* argv[]) {
 	sf::Sprite sourceSprite(sourceTexture);
 	sf::Image dest(source);
 
-	FibLFSR f1(argv[3]);
+	FibLFSR f1(argv[2]);
 
 	transform(dest, &f1);
 
